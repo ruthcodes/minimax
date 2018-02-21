@@ -5,7 +5,11 @@ var computer = "X";
 //board as array (starts off empty, numbers replaced by X or O after each move)
 var board = ["0","1","2","3","4","5","6","7","8"];
 //test board where O has won
-var winTestBoard = ["0","1","2","3","4","5","6","7","8"];
+var winTestBoard = ["X","X","O","X","O","X","6","O","8"];
+
+var test = ["X","1","O","O","4","X","O","O","X"];
+
+var chooseTwo = ["X","1","2","O","X","O","X","7","O"];
 
 // function returns true if given player has won on given board
 function win(checkBoard, player){
@@ -53,24 +57,24 @@ function play(checkBoard, player){
     move.index = checkBoard[emptiesArr[x]];
     checkBoard[emptiesArr[x]] = player;
 
-    if (player == "O"){
+    if (player == human){
       var result = play(checkBoard, computer);
-      move.score = result;
+      move.score = result.score;
     }
     else{
       var result = play(checkBoard, human);
-      move.score = result;
+      move.score = result.score;
     }
-    
+
     checkBoard[emptiesArr[x]] = move.index;
     moveObjects.push(move);
 
   }
-  
+
   //create a var to save the best available move in
   var idealMove;
   //for AI set the score low, so it will replace with the highest it finds. Save position of move
-  if (player == "X"){
+  if (player == computer){
     var idealScore = -10000;
     for (var j=0; j<moveObjects.length; j++){
       if (moveObjects[j].score > idealScore){
@@ -78,10 +82,10 @@ function play(checkBoard, player){
         idealMove = j;
       }
     }
-    
+
     //for human, set the score high
   } else {
-    var idealScore =  10000;
+    var idealScore = 10000;
     for (var k=0; k<moveObjects.length; k++){
       if (moveObjects[k].score < idealScore){
         idealScore = moveObjects[k].score;
@@ -93,13 +97,12 @@ function play(checkBoard, player){
   return moveObjects[idealMove];
 }
 
-console.log("function result: " + play(board, human));
+console.log(play(chooseTwo, computer));
 
 
 //should print list of numbers
-console.log(findOpen(winTestBoard));
+//console.log(findOpen(winTestBoard));
 //should print true
-console.log(win(winTestBoard, human));
+//console.log(win(winTestBoard, human));
 //should print false
-console.log(win(board, computer));
-
+//console.log(win(board, computer));
