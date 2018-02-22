@@ -60,22 +60,22 @@
      if (player == human){
        var result = play(checkBoard, computer, alpha, beta);
        if (result.score > alpha){
-         alpha = result;
+         alpha = result.score;
        }
        move.score = result.score;
-       if (alpha >= beta){
-         return alpha;
-       }
+       move.alpha = alpha;
+       move.beta = beta;
+
      }
      else{
        var result = play(checkBoard, human, alpha, beta);
        if (result.score < beta){
-         beta = result;
+         beta = result.score;
        }
        move.score = result.score;
-       if (beta <= alpha){
-         return beta;
-       }
+       move.alpha = alpha;
+       move.beta = beta;
+    
      }
  
      checkBoard[emptiesArr[x]] = move.index;
@@ -112,7 +112,7 @@
  alpha = Number.NEGATIVE_INFINITY;
  beta = Number.POSITIVE_INFINITY;
  
- console.log(play(test, computer));
+ console.log(play(chooseTwo, computer));
  
  
  //should print list of numbers
