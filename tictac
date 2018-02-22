@@ -12,7 +12,7 @@
  var chooseTwo = ["X",1,2,"O","X","O","X",7,"O"];
  
  // function returns true if given player has won on given board
- function win(checkBoard, player, alpha, beta){
+ function win(checkBoard, player){
    if(checkBoard[0] == player && checkBoard[1] == player && checkBoard[2] == player
    || checkBoard[0] == player && checkBoard[3] == player && checkBoard[6] == player
    || checkBoard[6] == player && checkBoard[7] == player && checkBoard[8] == player
@@ -36,7 +36,7 @@
    return empties;
  }
  
- function play(checkBoard, player){
+ function play(checkBoard, player, alpha, beta){
    //check what spaces are open
    var emptiesArr = findOpen(checkBoard);
  
@@ -52,7 +52,7 @@
    var moveObjects = [];
  
    //loop through open spaces
-   for (var x=0; x<emptiesArr.length; x++){
+ for (var x=0; x<emptiesArr.length; x++){
      var move = {};
      move.index = checkBoard[emptiesArr[x]];
      checkBoard[emptiesArr[x]] = player;
@@ -106,13 +106,13 @@
      }
    }
    //return the position in your array of objects of the best move
-   return moveObjects[idealMove];
+   return moveObjects;
  }
  
  alpha = Number.NEGATIVE_INFINITY;
  beta = Number.POSITIVE_INFINITY;
  
- console.log(play(chooseTwo, computer));
+ console.log(play(test, computer, alpha, beta));
  
  
  //should print list of numbers
