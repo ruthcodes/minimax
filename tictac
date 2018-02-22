@@ -106,3 +106,16 @@ console.log(play(chooseTwo, computer));
 //console.log(win(winTestBoard, human));
 //should print false
 //console.log(win(board, computer));
+
+/*while b > a
+		for loop create nodes of empty spaces
+    	make move object
+      if !a, set to Number.NEGATIVE_INFINITY;
+      if !b, set to Number.POSITIVE_INFINITY;
+      when you call minmax again recursively, include a and b values to set the children
+      after first call, move.alpha = aParam, move.beta = bParam
+      once score is returned and saved into score, also update the alpha beta for the parent being returned to
+
+
+*/
+
