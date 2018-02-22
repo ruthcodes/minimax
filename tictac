@@ -1,133 +1,123 @@
 //players
-var human = "O";
-var computer = "X";
-
-//board as array (starts off empty, numbers replaced by X or O after each move)
-var board = ["0","1","2","3","4","5","6","7","8"];
-//test board where O has won
-var winTestBoard = ["X","X","O","X","O","X","6","O","8"];
-
-var test = ["X","1","O","O","4","X","O","O","X"];
-
-var chooseTwo = ["X","1","2","O","X","O","X","7","O"];
-
-// function returns true if given player has won on given board
-function win(checkBoard, player){
-  if(checkBoard[0] == player && checkBoard[1] == player && checkBoard[2] == player
-  || checkBoard[0] == player && checkBoard[3] == player && checkBoard[6] == player
-  || checkBoard[6] == player && checkBoard[7] == player && checkBoard[8] == player
-  || checkBoard[2] == player && checkBoard[5] == player && checkBoard[8] == player
-  || checkBoard[3] == player && checkBoard[4] == player && checkBoard[5] == player
-  || checkBoard[6] == player && checkBoard[4] == player && checkBoard[2] == player
-  || checkBoard[1] == player && checkBoard[4] == player && checkBoard[7] == player){
-    return true;
-  }
-  return false;
-}
-
-//function returns an array of open spaces on given board
-function findOpen(checkBoard){
-  var empties = [];
-  var re = /\d/g;
-  for (var i=0; i<checkBoard.length; i++){
-    if(checkBoard[i].match(re))
-      empties.push(checkBoard[i]);
-  }
-  return empties;
-}
-
-function play(checkBoard, player, alpha, beta){
-  //check what spaces are open
-  var emptiesArr = findOpen(checkBoard);
-
-  //check win/loss/tie
-  if(win(checkBoard, computer))
-    return {score:10};
-  else if (win(checkBoard, human))
-    return {score:-10};
-  else if (emptiesArr.length < 1)
-    return {score:0};
-
-  // array to store moves
-  var moveObjects = [];
-
-  //loop through open spaces
-  for (var x=0; x<emptiesArr.length; x++){
-    var move = {};
-	if (!alpha){
-		move.alpha = Number.NEGATIVE_INFINITY;
-	}
-	if (!beta){
-		move.beta = Number.POSITIVE_INFINITY;
-	}
-	
-	while (move.beta <= move.alpha){
-		
-		move.index = checkBoard[emptiesArr[x]];
-		checkBoard[emptiesArr[x]] = player;
-
-		if (player == human){
-			var result = play(checkBoard, computer, move.alpha, move.beta);
-			move.score = result.score;
-			move.beta = move.score;
-		}
-		else{
-			var result = play(checkBoard, human, move.alpha, move.beta);
-			move.score = result.score;
-			move.alpha = move.score;
-		}
-
-		checkBoard[emptiesArr[x]] = move.index;
-		moveObjects.push(move);
-	}
-  }
-
-  //create a var to save the best available move in
-  var idealMove;
-  //for AI set the score low, so it will replace with the highest it finds. Save position of move
-  if (player == computer){
-    var idealScore = -10000;
-    for (var j=0; j<moveObjects.length; j++){
-      if (moveObjects[j].score > idealScore){
-        idealScore = moveObjects[j].score;
-        idealMove = j;
-      }
-    }
-
-    //for human, set the score high
-  } else {
-    var idealScore = 10000;
-    for (var k=0; k<moveObjects.length; k++){
-      if (moveObjects[k].score < idealScore){
-        idealScore = moveObjects[k].score;
-        idealMove = k;
-      }
-    }
-  }
-  //return the position in your array of objects of the best move
-  return moveObjects[idealMove];
-}
-
-console.log(play(chooseTwo, computer));
-
-
-//should print list of numbers
-//console.log(findOpen(winTestBoard));
-//should print true
-//console.log(win(winTestBoard, human));
-//should print false
-//console.log(win(board, computer));
-
-/*while b > a
-		for loop create nodes of empty spaces
-    	make move object
-      if !a, set to Number.NEGATIVE_INFINITY;
-      if !b, set to Number.POSITIVE_INFINITY;
-      when you call minmax again recursively, include a and b values to set the children
-      after first call, move.alpha = aParam, move.beta = bParam
-      once score is returned and saved into score, also update the alpha beta for the parent being returned to
-	  if returning to human, save b to a
-	  if returning to ai, save a to b
-
-
-*/
+ var human = "O";
+ var computer = "X";
+ 
+ //board as array (starts off empty, numbers replaced by X or O after each move)
+ var board = [0,1,2,3,4,5,6,7,8];
+ //test board where O has won
+ var winTestBoard = ["X","X","O","X","O","X",6,"O",8];
+ 
+ var test = ["X",1,"O","O",4,"X","O","O","X"];
+ 
+ var chooseTwo = ["X",1,2,"O","X","O","X",7,"O"];
+ 
+ // function returns true if given player has won on given board
+ function win(checkBoard, player, alpha, beta){
+   if(checkBoard[0] == player && checkBoard[1] == player && checkBoard[2] == player
+   || checkBoard[0] == player && checkBoard[3] == player && checkBoard[6] == player
+   || checkBoard[6] == player && checkBoard[7] == player && checkBoard[8] == player
+   || checkBoard[2] == player && checkBoard[5] == player && checkBoard[8] == player
+   || checkBoard[3] == player && checkBoard[4] == player && checkBoard[5] == player
+   || checkBoard[6] == player && checkBoard[4] == player && checkBoard[2] == player
+   || checkBoard[1] == player && checkBoard[4] == player && checkBoard[7] == player
+   || checkBoard[0] == player && checkBoard[4] == player && checkBoard[8] == player){
+     return true;
+   }
+   return false;
+ }
+ 
+ //function returns an array of open spaces on given board
+ function findOpen(checkBoard){
+   var empties = [];
+   for (var i=0; i<checkBoard.length; i++){
+     if(Number.isInteger(checkBoard[i]))
+       empties.push(checkBoard[i]);
+   }
+   return empties;
+ }
+ 
+ function play(checkBoard, player){
+   //check what spaces are open
+   var emptiesArr = findOpen(checkBoard);
+ 
+   //check win/loss/tie
+   if(win(checkBoard, computer))
+     return {score:10};
+   else if (win(checkBoard, human))
+     return {score:-10};
+   else if (emptiesArr.length < 1)
+     return {score:0};
+ 
+   // array to store moves
+   var moveObjects = [];
+ 
+   //loop through open spaces
+   for (var x=0; x<emptiesArr.length; x++){
+     var move = {};
+     move.index = checkBoard[emptiesArr[x]];
+     checkBoard[emptiesArr[x]] = player;
+ 
+     if (player == human){
+       var result = play(checkBoard, computer, alpha, beta);
+       if (result.score > alpha){
+         alpha = result;
+       }
+       move.score = result.score;
+       if (alpha >= beta){
+         return alpha;
+       }
+     }
+     else{
+       var result = play(checkBoard, human, alpha, beta);
+       if (result.score < beta){
+         beta = result;
+       }
+       move.score = result.score;
+       if (beta <= alpha){
+         return beta;
+       }
+     }
+ 
+     checkBoard[emptiesArr[x]] = move.index;
+     moveObjects.push(move);
+ 
+   }
+ 
+   //create a var to save the best available move in
+   var idealMove;
+   //for AI set the score low, so it will replace with the highest it finds. Save position of move
+   if (player == computer){
+     var idealScore = -10000;
+     for (var j=0; j<moveObjects.length; j++){
+       if (moveObjects[j].score > idealScore){
+         idealScore = moveObjects[j].score;
+         idealMove = j;
+       }
+     }
+ 
+     //for human, set the score high
+   } else {
+     var idealScore = 10000;
+     for (var k=0; k<moveObjects.length; k++){
+       if (moveObjects[k].score < idealScore){
+         idealScore = moveObjects[k].score;
+         idealMove = k;
+       }
+     }
+   }
+   //return the position in your array of objects of the best move
+   return moveObjects[idealMove];
+ }
+ 
+ alpha = Number.NEGATIVE_INFINITY;
+ beta = Number.POSITIVE_INFINITY;
+ 
+ console.log(play(test, computer));
+ 
+ 
+ //should print list of numbers
+// console.log(findOpen(winTestBoard));
+ //should print true
+ //console.log(win(winTestBoard, human));
+ //should print false
+ //console.log(win(board, computer));
