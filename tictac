@@ -36,7 +36,7 @@ function findOpen(checkBoard){
   return empties;
 }
 
-function play(checkBoard, player){
+function play(checkBoard, player, alpha, beta){
   //check what spaces are open
   var emptiesArr = findOpen(checkBoard);
 
@@ -54,21 +54,32 @@ function play(checkBoard, player){
   //loop through open spaces
   for (var x=0; x<emptiesArr.length; x++){
     var move = {};
-    move.index = checkBoard[emptiesArr[x]];
-    checkBoard[emptiesArr[x]] = player;
+	if (!alpha){
+		move.alpha = Number.NEGATIVE_INFINITY;
+	}
+	if (!beta){
+		move.beta = Number.POSITIVE_INFINITY;
+	}
+	
+	while (move.beta <= move.alpha){
+		
+		move.index = checkBoard[emptiesArr[x]];
+		checkBoard[emptiesArr[x]] = player;
 
-    if (player == human){
-      var result = play(checkBoard, computer);
-      move.score = result.score;
-    }
-    else{
-      var result = play(checkBoard, human);
-      move.score = result.score;
-    }
+		if (player == human){
+			var result = play(checkBoard, computer, move.alpha, move.beta);
+			move.score = result.score;
+			move.beta = move.score;
+		}
+		else{
+			var result = play(checkBoard, human, move.alpha, move.beta);
+			move.score = result.score;
+			move.alpha = move.score;
+		}
 
-    checkBoard[emptiesArr[x]] = move.index;
-    moveObjects.push(move);
-
+		checkBoard[emptiesArr[x]] = move.index;
+		moveObjects.push(move);
+	}
   }
 
   //create a var to save the best available move in
@@ -115,7 +126,8 @@ console.log(play(chooseTwo, computer));
       when you call minmax again recursively, include a and b values to set the children
       after first call, move.alpha = aParam, move.beta = bParam
       once score is returned and saved into score, also update the alpha beta for the parent being returned to
+	  if returning to human, save b to a
+	  if returning to ai, save a to b
 
 
 */
-
