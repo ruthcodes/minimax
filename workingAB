@@ -2,7 +2,7 @@
  var human = "O";
  var computer = "X";
  var bestMove;
-    var moves = [];
+
  
  //board as array (starts off empty, numbers replaced by X or O after each move)
  var board = [0,1,2,3,4,5,6,7,8];
@@ -57,7 +57,6 @@
        board[emptiesArr[x]] = player;
        score = Math.max(score, play(board, depth, a, b, human));
        board[emptiesArr[x]] = emptiesArr[x];
-       console.log(board);
        if (score > a){
          a = score;
          if (depth == 1){
@@ -95,5 +94,5 @@
    
  }
  
- console.log(play(test,0, -Infinity, Infinity, computer));
- console.log(bestMove);
+ console.log("Score of best move: " + play(chooseTwo,0, -Infinity, Infinity, computer));
+ console.log("Index of your best move is: " + bestMove);
