@@ -1,0 +1,99 @@
+//players
+ var human = "O";
+ var computer = "X";
+ var bestMove;
+    var moves = [];
+ 
+ //board as array (starts off empty, numbers replaced by X or O after each move)
+ var board = [0,1,2,3,4,5,6,7,8];
+ //test board where O has won
+ var winTestBoard = ["X","X","O","X","O","X",6,"O",8];
+ 
+ var test = ["X",1,"O","O",4,"X","O","O","X"];
+ 
+ var chooseTwo = ["X",1,2,"O","X","O","X",7,"O"];
+ 
+ // function returns true if given player has won on given board
+ function win(checkBoard, player){
+   if(checkBoard[0] == player && checkBoard[1] == player && checkBoard[2] == player
+   || checkBoard[0] == player && checkBoard[3] == player && checkBoard[6] == player
+   || checkBoard[6] == player && checkBoard[7] == player && checkBoard[8] == player
+   || checkBoard[2] == player && checkBoard[5] == player && checkBoard[8] == player
+   || checkBoard[3] == player && checkBoard[4] == player && checkBoard[5] == player
+   || checkBoard[6] == player && checkBoard[4] == player && checkBoard[2] == player
+   || checkBoard[1] == player && checkBoard[4] == player && checkBoard[7] == player
+   || checkBoard[0] == player && checkBoard[4] == player && checkBoard[8] == player){
+     return true;
+   }
+   return false;
+ }
+ 
+ //function returns an array of open spaces on given board
+ function findOpen(checkBoard){
+   var empties = [];
+   for (var i=0; i<checkBoard.length; i++){
+     if(Number.isInteger(checkBoard[i]))
+       empties.push(checkBoard[i]);
+   }
+   return empties;
+ }
+ 
+ function play(board, depth, a, b, player){
+   var emptiesArr = findOpen(board);
+   
+   if(win(board, computer))
+     return 10;
+   else if (win(board, human))
+     return -10;
+   else if (emptiesArr.length < 1)
+     return 0;
+     
+
+   depth +=1;
+   if (player == computer){
+     var score = -Infinity;
+     for (var x=0; x<emptiesArr.length; x++){
+       var move = board[emptiesArr[x]];
+       board[emptiesArr[x]] = player;
+       score = Math.max(score, play(board, depth, a, b, human));
+       board[emptiesArr[x]] = emptiesArr[x];
+       console.log(board);
+       if (score > a){
+         a = score;
+         if (depth == 1){
+            bestMove = move;
+         }
+       }
+
+       if (b <= a)
+          break;
+     }
+
+     return score;
+   } else {
+     var score = Infinity;
+     for (var x=0; x<emptiesArr.length; x++){
+       var move = board[emptiesArr[x]];
+       board[emptiesArr[x]] = player;
+       score = Math.min(score, play(board, depth, a, b, computer));
+       board[emptiesArr[x]] = emptiesArr[x];
+
+       if (score < b){
+         b = score;
+         if (depth == 1){
+           bestMove = move;
+         }
+       }
+
+       if (b<= a){
+         break;
+       }
+       
+     }
+    return score;
+   }
+   
+ }
+ 
+ console.log(play(test,0, -Infinity, Infinity, computer));
+ console.log(bestMove);
