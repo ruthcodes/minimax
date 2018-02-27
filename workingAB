@@ -42,7 +42,7 @@
    var emptiesArr = findOpen(board);
    
    if(win(board, computer))
-     return 10;
+     return 10 - depth;
    else if (win(board, human))
      return -10;
    else if (emptiesArr.length < 1)
