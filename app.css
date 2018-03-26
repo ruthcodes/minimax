@@ -1,0 +1,184 @@
+html{
+  background-color: black;
+  min-width: 360px;
+  color: white;
+  font-family: 'Nanum Pen Script', cursive;
+}
+
+.wrapper {
+  display: grid;
+  text-align: center;
+  min-width: 100%;
+  background-color: black;
+  -webkit-grid-template-areas: "one    title      two"
+                       "three  gameWindow four"
+                       "five   team       six";
+  -webkit-grid-template-rows: 175px 300px 1fr;
+  -webkit-grid-template-columns: 1fr 300px 1fr;
+  
+  
+  grid-template-areas: "one    title      two"
+                       "three  gameWindow four"
+                       "five   team       six";
+  grid-template-rows: 175px 300px 1fr;
+  grid-template-columns: 1fr 300px 1fr;
+}
+
+#one{
+  -webkit-grid-area: one;
+  grid-area: one;
+}
+
+#two{
+  -webkit-grid-area: two;
+  grid-area: two; 
+}
+
+#three{
+  -webkit-grid-area: three;
+  grid-area: three; 
+}
+
+#four{
+  -webkit-grid-area: four;
+  grid-area: four;
+}
+
+#five{
+  -webkit-grid-area: five;
+  grid-area: five;
+}
+
+#six{
+  -webkit-grid-area: six;
+  grid-area: six;
+}
+
+.tile{
+  
+  border: 3px solid white;
+  font-size: 80px;
+  text-align: center;
+  text-shadow: 0 0 5px #000;
+  display:block;
+  float: left;
+  height:100px;
+  width: 100px;
+}
+
+#topleft{
+  -webkit-grid-area:topleft;
+  grid-area: topleft;
+  border-style: none solid solid none; 
+}
+
+#topmiddle{
+  -webkit-grid-area:topmiddle;
+  grid-area: topmiddle;
+  border-style: none solid solid; 
+}
+
+#topright{
+  -webkit-grid-area:topright;
+  grid-area: topright;
+  border-top: none;
+  border-right: none;
+}
+
+#middleleft{
+  -webkit-grid-area:middleleft;
+  grid-area: middleleft;
+  border-left: none;
+}
+
+#middlemiddle{
+  -webkit-grid-area:middlemiddle; 
+  grid-area: middlemiddle; 
+}
+
+#middleright{
+  -webkit-grid-area:middleright;
+  grid-area: middleright;
+  border-right: none;
+}
+
+#bottomleft{
+  -webkit-grid-area:bottomleft;
+  grid-area: bottomleft;
+  border-left:none;
+  border-bottom: none;
+}
+
+#bottommiddle{
+  -webkit-grid-area:bottommiddle;
+  grid-area: bottommiddle;
+  border-bottom: none;
+}
+
+#bottomright{
+  -webkit-grid-area:bottomright;
+  grid-area: bottomright;
+  border-right: none;
+  border-bottom: none;
+}
+
+.title{
+  -webkit-grid-area: title;
+  grid-area: title;
+  text-align: center;
+  font-size: 70px;
+  align-self: end;
+  background-color: black;
+}
+
+.gameWindow{
+
+  margin:0 auto;
+  height: 300px;
+  width: 312px;
+  background-color: black;
+  -webkit-grid-area: gameWindow;
+  grid-area: gameWindow;
+  display: inline-block;
+  display: grid;
+  -webkit-grid-template-areas: "topleft topmiddle topright"
+                        "middleleft middlemiddle middleright"
+                         "bottomleft bottommiddle bottomright";
+  -webkit-grid-template-rows: 1fr 1fr 1fr;
+  -webkit-grid-template-columns: 1fr 1fr 1fr;
+  
+  grid-template-areas: "topleft topmiddle topright"
+                        "middleleft middlemiddle middleright"
+                         "bottomleft bottommiddle bottomright";
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  
+}
+
+
+.team{
+  -webkit-grid-area: team;
+  grid-area: team;
+  font-size:50px;
+  text-align: center;
+  align-self: center;
+  margin-top:50px;
+}
+
+button{
+  margin: 20px;
+  background-color: black;
+  border-style: none;
+  height: 110px;
+  width: 110px;
+  font-size: 68px;
+  padding: 0;
+  color:white;
+  cursor: pointer;
+  font-family: 'Nanum Pen Script', cursive;
+}
+
+
+span{
+  display: inline-block;
+}
